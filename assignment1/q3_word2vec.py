@@ -159,6 +159,8 @@ def skipgram(currentWord, C, contextWords, tokens, inputVectors, outputVectors,
         cost += currentCost
         gradIn[input_index, :] += currentGradPred
         gradOut += currentGrad
+
+    # cost /= float(C); gradIn /= float(C); gradOut /= float(C)
     ### END YOUR CODE
 
     return cost, gradIn, gradOut
@@ -186,6 +188,8 @@ def cbow(currentWord, C, contextWords, tokens, inputVectors, outputVectors,
     predicted = np.zeros((inputVectors.shape[-1], ), dtype=np.float)
     for x in contextWords:
         predicted += inputVectors[tokens[x], :]
+    
+    # predicted /= float(C)
 
     currentCost, currentGradPred, currentGrad = \
         word2vecCostAndGradient(predicted, tokens[currentWord], outputVectors, dataset)
